@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"time"
 
 	"github.com/MikMuellerDev/smarthome-hw-ir/core/config"
 	"github.com/MikMuellerDev/smarthome-hw-ir/core/log"
@@ -35,7 +34,7 @@ func SendHomescript(code string) error {
 		return err
 	}
 	// Create a client with a more realistic timeout of 1 second
-	client := http.Client{Timeout: time.Second}
+	client := http.Client{}
 	res, err := client.Post(
 		fmt.Sprintf("%s/api/homescript/run/live?username=%s&password=%s",
 			smarthomeConfig.SmarthomeUrl,
