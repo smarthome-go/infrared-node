@@ -1,0 +1,13 @@
+[Unit]
+Description=infrared receiver for smarthome
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+WorkingDirectory=/usr/bin/smarthome-hw-ir/
+ExecStart=/usr/bin/smarthome-hw-ir/smarthome-hw-ir
+Restart=on-failure
+[Install]
+WantedBy=multi-user.target
