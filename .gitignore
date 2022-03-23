@@ -24,3 +24,5 @@ go.work
 # Build files
 build
 bin
+application.log
+config.json
