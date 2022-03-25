@@ -1,2 +1,2 @@
-# smarthome-hw-ir
+# Smarthome-hw-ir
  Interface for smarthome that allows IR control
