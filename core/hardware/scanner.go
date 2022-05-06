@@ -3,13 +3,13 @@ package hardware
 import (
 	"fmt"
 
-	"github.com/MikMuellerDev/rpiif"
+	"github.com/smarthome-go/infrared"
 
 	"github.com/smarthome-go/infrared-node/core/config"
 	"github.com/smarthome-go/infrared-node/core/log"
 )
 
-var ifScanner rpiif.IfScanner
+var ifScanner infrared.IfScanner
 
 func Init(config config.Hardware) error {
 	if err := ifScanner.Setup(config.ScannerDevicePin); err != nil {

@@ -17,7 +17,7 @@ type Config struct {
 
 var Version string
 
-// Documentation of following parameters: github.com/MikMuellerDev/rpiif
+// Documentation of following parameters: github.com/smarthome-go/infrared
 type Hardware struct {
 	HardwareEnabled  bool  `json:"hardwareEnabled"`
 	ScannerDevicePin uint8 `json:"pin"` // The BCM pin to which a infrared receiver is attached

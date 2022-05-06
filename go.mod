@@ -10,6 +10,6 @@ require (
 require github.com/stianeikeland/go-rpio/v4 v4.6.0 // indirect
 
 require (
-	github.com/MikMuellerDev/rpiif v0.1.0
+	github.com/smarthome-go/infrared v1.0.1
 	golang.org/x/sys v0.0.0-20191026070338-33540a1f6037 // indirect
 )
