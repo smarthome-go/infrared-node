@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 
-	"github.com/MikMuellerDev/smarthome-hw-ir/core/log"
+	"github.com/smarthome-go/infrared-node/core/log"
 )
 
 type Config struct {

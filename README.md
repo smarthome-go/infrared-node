@@ -1,2 +1,2 @@
-# Smarthome-hw-ir
- Interface for smarthome that allows IR control
+# Infrared-Node
+Interface for smarthome that allows IR control

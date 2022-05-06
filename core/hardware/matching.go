@@ -3,9 +3,9 @@ package hardware
 import (
 	"fmt"
 
-	"github.com/MikMuellerDev/smarthome-hw-ir/core/config"
-	"github.com/MikMuellerDev/smarthome-hw-ir/core/log"
-	"github.com/MikMuellerDev/smarthome-hw-ir/core/smarthome"
+	"github.com/smarthome-go/infrared-node/core/config"
+	"github.com/smarthome-go/infrared-node/core/log"
+	"github.com/smarthome-go/infrared-node/core/smarthome"
 )
 
 // Returns the matched Homescript code as a string and a boolean that indicates if a homescript could be matched

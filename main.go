@@ -1,10 +1,11 @@
 package main
 
 import (
-	"github.com/MikMuellerDev/smarthome-hw-ir/core/config"
-	"github.com/MikMuellerDev/smarthome-hw-ir/core/hardware"
-	"github.com/MikMuellerDev/smarthome-hw-ir/core/log"
 	"github.com/sirupsen/logrus"
+
+	"github.com/smarthome-go/infrared-node/core/config"
+	"github.com/smarthome-go/infrared-node/core/hardware"
+	"github.com/smarthome-go/infrared-node/core/log"
 )
 
 func main() {

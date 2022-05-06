@@ -1,4 +1,4 @@
-module github.com/MikMuellerDev/smarthome-hw-ir
+module github.com/smarthome-go/infrared-node
 
 go 1.18
 
