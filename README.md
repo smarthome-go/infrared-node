@@ -1,2 +1,2 @@
 # Infrared-Node
-Interface for smarthome that allows IR control
+Hardware interface for Smarthome which provides `IR` control using Homescript.
