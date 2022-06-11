@@ -20,6 +20,8 @@
 # Go workspace file
 go.work
 
+# Application files
+*.log
 
 # Build files
 build
