@@ -2,7 +2,7 @@ appname := smarthome-hw-ir
 version := v1.0.0
 sources := $(wildcard *.go)
 
-build = mkdir -p smarthome-hw-ir-bin && cp -r dist/* smarthome-hw-ir-bin && GOOS=$(1) GOARCH=$(2) go build -o ./smarthome-hw-ir-bin/$(appname)$(3) $(4)
+build = mkdir -p smarthome-hw-ir-bin && cp -r dist/* smarthome-hw-ir-bin && GOOS=$(1) GOARCH=$(2) go build  -ldflags '-s -w' -o ./smarthome-hw-ir-bin/$(appname)$(3) $(4)
 tar = mkdir -p build && tar -cvzf ./$(appname)_$(version)_$(1)_$(2).tar.gz smarthome-hw-ir-bin && mv $(appname)_$(version)_$(1)_$(2).tar.gz build
 
 .PHONY: all linux
@@ -27,7 +27,7 @@ build: all linux clean
 linux: build/linux_arm.tar.gz build/linux_amd64.tar.gz
 
 build/linux_amd64.tar.gz: $(sources)
-	$(call build,linux,amd64, -ldflags '-extldflags "-fno-PIC -static"' -buildmode pie -tags 'osusergo netgo static_build')
+	$(call build,linux,amd64, -ldflags '-s -w -extldflags "-fno-PIC -static"' -buildmode pie -tags 'osusergo netgo static_build')
 	$(call tar,linux,amd64)
 
 build/linux_arm.tar.gz: $(sources)
