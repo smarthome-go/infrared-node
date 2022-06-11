@@ -7,7 +7,10 @@ require (
 	github.com/sirupsen/logrus v1.8.1
 )
 
-require github.com/stianeikeland/go-rpio/v4 v4.6.0 // indirect
+require (
+	github.com/smarthome-go/sdk v0.12.1 // indirect
+	github.com/stianeikeland/go-rpio/v4 v4.6.0 // indirect
+)
 
 require (
 	github.com/smarthome-go/infrared v1.0.1
