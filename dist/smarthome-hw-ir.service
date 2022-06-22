@@ -1,5 +1,5 @@
 [Unit]
-Description=infrared receiver for smarthome
+Description=Infrared receiver for Smarthome
 After=network.target
 
 [Service]
@@ -8,6 +8,7 @@ User=pi
 Group=pi
 WorkingDirectory=/usr/bin/smarthome-hw-ir/
 ExecStart=/usr/bin/smarthome-hw-ir/smarthome-hw-ir
-Restart=on-failure
+Restart=always
+
 [Install]
 WantedBy=multi-user.target
