@@ -11,6 +11,6 @@ sudo cp ./smarthome-hw-ir.service /lib/systemd/system/smarthome-hw-ir.service ||
 
 # Reload systemd
 sudo systemctl daemon-reload || exit 1
-sudo systemctl start smarthome-hw-ir || exit 1
+sudo systemctl enable smarthome-hw-ir --now || exit 1
 
 echo -e "\x1b[1;32minstallation completed\x1b[1;0m"
