@@ -1,6 +1,8 @@
 [Unit]
 Description=Infrared receiver for Smarthome
-After=network.target
+Documentation=https://github.com/smarthome-go/infrared-node
+Wants=network-online.target
+After=network.target network-online.target
 
 [Service]
 Type=simple
