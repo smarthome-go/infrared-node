@@ -2,7 +2,7 @@
 Description=Infrared receiver for Smarthome
 Documentation=https://github.com/smarthome-go/infrared-node
 Wants=network-online.target
-After=network.target network-online.target
+After=network-online.target
 
 [Service]
 Type=simple
