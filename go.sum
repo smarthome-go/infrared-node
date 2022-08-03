@@ -1,3 +1,5 @@
+github.com/Masterminds/semver v1.5.0 h1:H65muMkzWKEuNDnfl9d70GUjFniHKHRbFPGBuZ3QEww=
+github.com/Masterminds/semver v1.5.0/go.mod h1:MB6lktGJrhw8PrUyiEoblNEGEQ+RzHPF078ddwwvV3Y=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/gorilla/securecookie v1.1.1 h1:miw7JPhV+b/lAHSXz4qd/nN9jRiAFV5FwjeKyCS8BvQ=
@@ -12,6 +14,8 @@ github.com/smarthome-go/infrared v1.0.1 h1:ldYfSE8NqCE1FmGsJFTtKxKWSKV9pesP+YdYG
 github.com/smarthome-go/infrared v1.0.1/go.mod h1:xr7g+fs2oupj71YwrmdCasF7q3vgaJ6+7oVB9gdHa84=
 github.com/smarthome-go/sdk v0.12.1 h1:QcyacRIUgcwIrOzL0NwCZlah7O6vSP21tetRZm4GMpQ=
 github.com/smarthome-go/sdk v0.12.1/go.mod h1:kfYJNsB0dR1HgD4SU7P/D2tSAB2Jntcq1cgLpjEaknQ=
+github.com/smarthome-go/sdk v0.16.0 h1:MWUSSpagd9FTZczc38Os48rdniATem3g1FtHCg69k60=
+github.com/smarthome-go/sdk v0.16.0/go.mod h1:0JktAhdOwOb569SP660NuiPNeP4yAP+KqUpG4y5ZL6g=
 github.com/stianeikeland/go-rpio/v4 v4.6.0 h1:eAJgtw3jTtvn/CqwbC82ntcS+dtzUTgo5qlZKe677EY=
 github.com/stianeikeland/go-rpio/v4 v4.6.0/go.mod h1:A3GvHxC1Om5zaId+HqB3HKqx4K/AqeckxB7qRjxMK7o=
 github.com/stretchr/testify v1.2.2/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXfy6kDkUVs=

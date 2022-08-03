@@ -23,30 +23,53 @@ func main() {
 		log.Error("Failed to start service: could not read config file: ", err.Error())
 		os.Exit(1)
 	}
-	// Attempt to connect to Smarthome
-	c, err := sdk.NewConnection(conf.Smarthome.SmarthomeUrl, sdk.AuthMethodQuery)
+
+	// Create a connection to Smarthome
+	log.Debug(fmt.Sprintf("Initiating connection to Smarthome (`%s@%s`)", conf.Smarthome.SmarthomeUser, conf.Smarthome.SmarthomeUrl))
+	c, err := sdk.NewConnection(
+		conf.Smarthome.SmarthomeUrl,
+		sdk.AuthMethodQuery,
+	)
 	if err != nil {
 		log.Error("Could not initialize SDK: invalid Smarthome configuration: ", err.Error())
 		os.Exit(1)
 	}
-	if err := c.Connect(conf.Smarthome.SmarthomeUser, conf.Smarthome.SmarthomePassword); err != nil {
+
+	// Authenticate
+	if err := c.Connect(
+		conf.Smarthome.SmarthomeUser,
+		conf.Smarthome.SmarthomePassword,
+	); err != nil {
 		log.Error("Could establish connection using SDK: invalid Smarthome configuration: ", err.Error())
 		os.Exit(1)
 	}
+	log.Trace(fmt.Sprintf("Successfully established connection to Smarthome (`%s@%s`)", conf.Smarthome.SmarthomeUser, conf.Smarthome.SmarthomeUrl))
+
 	// Test if Homescript can be executed
-	if _, err := c.RunHomescriptCode("print('test')", make(map[string]string, 0), time.Second*10); err != nil {
+	log.Debug("Executing test Homescript...")
+	if _, err := c.RunHomescriptCode(
+		"print('test')",
+		make(map[string]string, 0),
+		time.Second*10,
+	); err != nil {
 		log.Error("Could not run test Homescript: ", err.Error())
 		os.Exit(1)
 	}
+	log.Trace("Test Homescript was successfully executed. Smarthome configuration is valid.")
+
 	// Do not start the scanner if the hardware is disabled
 	if !conf.Hardware.HardwareEnabled {
 		log.Warn("Hardware is not enabled, exiting")
 		os.Exit(0)
 	}
+
+	// Initialize hardware
+	log.Debug(fmt.Sprintf("Initializing infrared scanner on port %d", conf.Hardware.ScannerDevicePin))
 	scanner, err := hardware.Init(conf.Hardware)
 	if err != nil {
 		log.Error("Failed to start service: could not initialize hardware: ", err.Error())
 		os.Exit(1)
 	}
+
 	hardware.Scan(c, conf, scanner)
 }
