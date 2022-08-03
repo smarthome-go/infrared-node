@@ -1,5 +1,5 @@
 appname := smarthome-hw-ir
-version := 1.2.1
+version := 1.3.0
 sources := $(wildcard *.go)
 
 build = mkdir -p smarthome-hw-ir-bin && cp -r dist/* smarthome-hw-ir-bin && GOOS=$(1) GOARCH=$(2) go build  -ldflags '-s -w' -o ./smarthome-hw-ir-bin/$(appname)$(3) $(4)

@@ -13,7 +13,7 @@ import (
 	"github.com/smarthome-go/sdk"
 )
 
-const Version = "1.2.1"
+const Version = "1.3.0"
 
 func main() {
 	if err := log.InitLogger(logrus.TraceLevel); err != nil {
