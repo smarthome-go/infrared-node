@@ -15,8 +15,6 @@ type Config struct {
 	Actions   []Action  `json:"actions"`
 }
 
-var Version string
-
 // Documentation of following parameters: github.com/smarthome-go/infrared
 type Hardware struct {
 	HardwareEnabled  bool  `json:"hardwareEnabled"`

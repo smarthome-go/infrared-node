@@ -13,6 +13,8 @@ import (
 	"github.com/smarthome-go/sdk"
 )
 
+const Version = "1.2.1"
+
 func main() {
 	if err := log.InitLogger(logrus.TraceLevel); err != nil {
 		fmt.Println("Failed to initialize logger: ", err.Error())
@@ -70,6 +72,8 @@ func main() {
 		log.Error("Failed to start service: could not initialize hardware: ", err.Error())
 		os.Exit(1)
 	}
+
+	log.Info(fmt.Sprintf("Smarthome-hw-ir %s is listening on pin %d", Version, conf.Hardware.ScannerDevicePin))
 
 	// Start receiving codes
 	hardware.StartScan(

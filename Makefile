@@ -1,5 +1,5 @@
 appname := smarthome-hw-ir
-version := v1.2.1
+version := 1.2.1
 sources := $(wildcard *.go)
 
 build = mkdir -p smarthome-hw-ir-bin && cp -r dist/* smarthome-hw-ir-bin && GOOS=$(1) GOARCH=$(2) go build  -ldflags '-s -w' -o ./smarthome-hw-ir-bin/$(appname)$(3) $(4)
@@ -8,6 +8,14 @@ tar = mkdir -p build && tar -cvzf ./$(appname)_$(version)_$(1)_$(2).tar.gz smart
 .PHONY: all linux
 
 all:	linux
+
+# Update the current version in all locations
+version:
+	python3 update_version.py
+
+# Prepares everything for a version-release
+# In order to publish the release to Github, run `make gh-release
+release: cleanall build
 
 run:
 	go run .
