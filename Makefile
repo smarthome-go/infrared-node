@@ -19,7 +19,7 @@ release: cleanall build
 
 # Publishes the local release to Github releases
 gh-release:
-	gh release create v$(version) ./build/*.tar.gz -F ./CHANGELOG.md -t 'Node v$(version)'
+	gh release create v$(version) ./build/*.tar.gz -F ./CHANGELOG.md -t 'Infrared Node v$(version)'
 
 run:
 	go run .
