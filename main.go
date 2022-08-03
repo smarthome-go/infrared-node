@@ -26,7 +26,7 @@ func main() {
 
 	// Create a connection to Smarthome
 	log.Debug(fmt.Sprintf("Initiating connection to Smarthome (`%s@%s`)", conf.Smarthome.SmarthomeUser, conf.Smarthome.SmarthomeUrl))
-	c, err := sdk.NewConnection(
+	smarthomeConnection, err := sdk.NewConnection(
 		conf.Smarthome.SmarthomeUrl,
 		sdk.AuthMethodQuery,
 	)
@@ -36,7 +36,7 @@ func main() {
 	}
 
 	// Authenticate
-	if err := c.Connect(
+	if err := smarthomeConnection.Connect(
 		conf.Smarthome.SmarthomeUser,
 		conf.Smarthome.SmarthomePassword,
 	); err != nil {
@@ -47,7 +47,7 @@ func main() {
 
 	// Test if Homescript can be executed
 	log.Debug("Executing test Homescript...")
-	if _, err := c.RunHomescriptCode(
+	if _, err := smarthomeConnection.RunHomescriptCode(
 		"print('test')",
 		make(map[string]string, 0),
 		time.Second*10,
@@ -71,5 +71,10 @@ func main() {
 		os.Exit(1)
 	}
 
-	hardware.Scan(c, conf, scanner)
+	// Start receiving codes
+	hardware.StartScan(
+		smarthomeConnection,
+		conf,
+		scanner,
+	)
 }
