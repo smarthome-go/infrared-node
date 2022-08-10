@@ -38,4 +38,7 @@ with open(changelog_path, 'r') as changelog:
     old_version = content.split("## Changelog for v")[1].split('\n')[0]
     print(f"Found old version in {changelog_path}: {old_version}")
 
+with open(changelog_path, "w") as changelog:
+    changelog.write(content.replace(old_version, VERSION))
+
 print(f"Version has been changed from '{old_version}' -> '{VERSION}'")
