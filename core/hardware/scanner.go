@@ -12,9 +12,9 @@ import (
 )
 
 // Sets up the scanner and prepare it for operation
-func Init(config config.Hardware) (infrared.IfScanner, error) {
+func Init(hardware config.Hardware) (infrared.IfScanner, error) {
 	ifScanner := infrared.IfScanner{}
-	if err := ifScanner.Setup(config.ScannerDevicePin); err != nil {
+	if err := ifScanner.Setup(hardware.Pin); err != nil {
 		log.Error("Failed to setup scanner: ", err.Error())
 		return infrared.IfScanner{}, err
 	}
@@ -41,9 +41,9 @@ func Scan(shome *sdk.Connection, conf config.Config, ifScanner infrared.IfScanne
 // If a match has been found, the matching Homescript code will be executed
 func matchCode(shome *sdk.Connection, conf config.Config, code string) {
 	for _, option := range conf.Actions {
-		if option.TriggerCode == code {
-			log.Debug(fmt.Sprintf("Code '%s' matched to action '%s'", option.TriggerCode, option.Name))
-			res, err := shome.RunHomescriptCode(option.ActionHomescript, make(map[string]string, 0), time.Duration(uint(time.Second)*conf.Smarthome.HmsTimeout))
+		if option.Code == code {
+			log.Debug(fmt.Sprintf("Code '%s' matched to action '%s'", option.Code, option.Name))
+			res, err := shome.RunHomescriptCode(option.Homescript, make(map[string]string, 0), time.Duration(uint(time.Second)*conf.Smarthome.HmsTimeout))
 			if err != nil {
 				log.Error("Homescript execution failed: ", err.Error())
 				return

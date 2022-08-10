@@ -9,34 +9,40 @@ import (
 	"github.com/smarthome-go/infrared-node/core/log"
 )
 
+var Version string
+
 type Config struct {
-	Hardware  Hardware  `json:"hardware"`
 	Smarthome Smarthome `json:"smarthome"`
+	Hardware  Hardware  `json:"hardware"`
 	Actions   []Action  `json:"actions"`
 }
 
-var Version string
-
 // Documentation of following parameters: github.com/smarthome-go/infrared
 type Hardware struct {
-	HardwareEnabled  bool  `json:"hardwareEnabled"`
-	ScannerDevicePin uint8 `json:"pin"` // The BCM pin to which a infrared receiver is attached
+	Enabled bool  `json:"enabled"`
+	Pin     uint8 `json:"pin"` // The BCM pin to which an infrared receiver is attached
 }
 
 type Smarthome struct {
-	SmarthomeUrl  string `json:"url"`
-	SmarthomeUser string `json:"user"`
-	// The password should later be replaced with an access token
-	SmarthomePassword string `json:"password"`
-	// Specifies how long the SDK waits before abandoning a HMS request
+	URL         string      `json:"url"`
+	TokenAuth   bool        `json:"tokenAuth"`
+	Credentials Credentials `json:"credentials"`
+	// Specifies how long the SDK waits before abandoning a HMS Homescript request
 	HmsTimeout uint `json:"hmsTimeout"`
+}
+
+type Credentials struct {
+	Username string `json:"user"`
+	Password string `json:"password"`
+	// Or if an authentication token should be used
+	Token string `json:"token"`
 }
 
 // Specifies what to do when a code is matched
 type Action struct {
-	TriggerCode      string `json:"trigger"` // The received infrared code
-	ActionHomescript string `json:"action"`  // The action which is executed when the trigger matches
-	Name             string `json:"name"`
+	Name       string `json:"name"`       // A friendly name for easy recognition
+	Code       string `json:"code"`       // The received infrared code
+	Homescript string `json:"homescript"` // The action which is executed when the trigger matches
 }
 
 // The path were the config file is located
@@ -73,7 +79,7 @@ func ReadConfigFile() (Config, error) {
 			log.Fatal("Failed to initialize config: could not read or create a config file: ", errCreate.Error())
 			return Config{}, err
 		}
-		log.Info("Failed to read config file: created a new config file")
+		log.Info(fmt.Sprintf("Created a new configuration file at `%s`", configPath))
 		return configTemp, nil
 	}
 	// Parse config file to struct <Config>
@@ -85,6 +91,10 @@ func ReadConfigFile() (Config, error) {
 		log.Error(fmt.Sprintf("Failed to parse config file at `%s` into Config struct: %s", configPath, err.Error()))
 		return Config{}, err
 	}
+	// Check if the user entered dubious values in the configuration file
+	if (configFile.Smarthome.Credentials.Username != "" || configFile.Smarthome.Credentials.Password != "") && configFile.Smarthome.TokenAuth {
+		log.Warn("Username and / or password not empty whilst using token authentication: ignoring username and password")
+	}
 	return configFile, nil
 }
 
@@ -92,20 +102,23 @@ func ReadConfigFile() (Config, error) {
 func createNewConfigFile() (Config, error) {
 	config := Config{
 		Hardware: Hardware{
-			HardwareEnabled:  false,
-			ScannerDevicePin: 0,
+			Enabled: false,
+			Pin:     0,
 		},
 		Smarthome: Smarthome{
-			SmarthomeUrl:      "http://smarthome.box",
-			SmarthomeUser:     "admin",
-			SmarthomePassword: "admin",
-			HmsTimeout:        10,
+			URL: "http://smarthome.box",
+			Credentials: Credentials{
+				Token:    "your-token-here",
+				Username: "",
+				Password: "",
+			},
+			HmsTimeout: 10,
 		},
 		Actions: []Action{
 			{
-				TriggerCode:      "2a00aaa95",
-				ActionHomescript: "switch('sx', on)",
-				Name:             "demo",
+				Name:       "demo",
+				Code:       "2a00aaa95",
+				Homescript: "switch('sx', on)",
 			},
 		},
 	}

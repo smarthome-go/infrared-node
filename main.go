@@ -23,24 +23,47 @@ func main() {
 		log.Error("Failed to start service: could not read config file: ", err.Error())
 		os.Exit(1)
 	}
+	// Decide whether to use token or password authentication
+	var conn *sdk.Connection
+	var connErr error
+	// Create a new (different) connection based on whether to use token auth
+	if conf.Smarthome.TokenAuth {
+		conn, connErr = sdk.NewConnection(conf.Smarthome.URL, sdk.AuthMethodQueryToken)
+	} else {
+		conn, connErr = sdk.NewConnection(conf.Smarthome.URL, sdk.AuthMethodQueryPassword)
+	}
+	// Handle any connection creation errors here
+	if connErr != nil {
+		log.Error("Could not initialize SDK: invalid Smarthome configuration: ", connErr.Error())
+		os.Exit(1)
+	}
+
 	// Attempt to connect to Smarthome
-	c, err := sdk.NewConnection(conf.Smarthome.SmarthomeUrl, sdk.AuthMethodQuery)
-	if err != nil {
-		log.Error("Could not initialize SDK: invalid Smarthome configuration: ", err.Error())
+	var loginErr error
+	// Use different login methods depending on whether to use a token or not
+	if conf.Smarthome.TokenAuth {
+		loginErr = conn.TokenLogin(conf.Smarthome.Credentials.Token)
+	} else {
+		loginErr = conn.UserLogin(conf.Smarthome.Credentials.Username, conf.Smarthome.Credentials.Password)
+	}
+	if loginErr != nil {
+		log.Error("Could establish connection using SDK: invalid Smarthome configuration: ", loginErr.Error())
 		os.Exit(1)
 	}
-	if err := c.Connect(conf.Smarthome.SmarthomeUser, conf.Smarthome.SmarthomePassword); err != nil {
-		log.Error("Could establish connection using SDK: invalid Smarthome configuration: ", err.Error())
-		os.Exit(1)
-	}
-	// Test if Homescript can be executed
-	if _, err := c.RunHomescriptCode("print('test')", make(map[string]string, 0), time.Second*10); err != nil {
+
+	// Test if Homescript code can be executed
+	if _, err := conn.RunHomescriptCode(
+		"print('test')",
+		make(map[string]string, 0),
+		time.Second*10,
+	); err != nil {
 		log.Error("Could not run test Homescript: ", err.Error())
 		os.Exit(1)
 	}
+
 	// Do not start the scanner if the hardware is disabled
-	if !conf.Hardware.HardwareEnabled {
-		log.Warn("Hardware is not enabled, exiting")
+	if !conf.Hardware.Enabled {
+		log.Warn("Hardware is disabled stopping the service...")
 		os.Exit(0)
 	}
 	scanner, err := hardware.Init(conf.Hardware)
@@ -48,5 +71,5 @@ func main() {
 		log.Error("Failed to start service: could not initialize hardware: ", err.Error())
 		os.Exit(1)
 	}
-	hardware.Scan(c, conf, scanner)
+	hardware.Scan(conn, conf, scanner)
 }
