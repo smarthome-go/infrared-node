@@ -1,9 +1,9 @@
 appname := smarthome-hw-ir
-version := v1.2.1
+version := 1.3.0
 sources := $(wildcard *.go)
 
 build = mkdir -p smarthome-hw-ir-bin && cp -r dist/* smarthome-hw-ir-bin && GOOS=$(1) GOARCH=$(2) go build  -ldflags '-s -w' -o ./smarthome-hw-ir-bin/$(appname)$(3) $(4)
-tar = mkdir -p build && tar -cvzf ./$(appname)_$(version)_$(1)_$(2).tar.gz smarthome-hw-ir-bin && mv $(appname)_$(version)_$(1)_$(2).tar.gz build
+tar = mkdir -p build && tar -cvzf ./$(appname)_v$(version)_$(1)_$(2).tar.gz smarthome-hw-ir-bin && mv $(appname)_v$(version)_$(1)_$(2).tar.gz build
 
 .PHONY: all linux
 
