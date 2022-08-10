@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"os"
 
 	"github.com/smarthome-go/infrared-node/core/log"
 )
@@ -52,7 +52,7 @@ const configPath = "./config.json"
 func ProbeConfigFile() error {
 	// Read file from <configPath> on disk
 	// If this file does not exist, return an error
-	content, err := ioutil.ReadFile(configPath)
+	content, err := os.ReadFile(configPath)
 	if err != nil {
 		log.Error("Failed to read config file: ", err.Error())
 		return nil
@@ -71,7 +71,7 @@ func ProbeConfigFile() error {
 
 // Reads the config file from disk, if the file does not exist (for example first run), a new one is created
 func ReadConfigFile() (Config, error) {
-	content, err := ioutil.ReadFile(configPath)
+	content, err := os.ReadFile(configPath)
 	if err != nil {
 		configTemp, errCreate := createNewConfigFile()
 		if errCreate != nil {
@@ -127,7 +127,7 @@ func createNewConfigFile() (Config, error) {
 		log.Error("Failed to create config file: creating file content from JSON failed: ", err.Error())
 		return Config{}, err
 	}
-	if err = ioutil.WriteFile("./config.json", fileContent, 0644); err != nil {
+	if err = os.WriteFile("./config.json", fileContent, 0644); err != nil {
 		log.Error("Failed to write file to disk: ", err.Error())
 		return Config{}, err
 	}
@@ -143,7 +143,7 @@ func WriteConfig(config Config) error {
 		return err
 	}
 	configJson, _ := json.MarshalIndent(&config, "", "    ")
-	err = ioutil.WriteFile("./config.json", configJson, 0644)
+	err = os.WriteFile("./config.json", configJson, 0644)
 	if err != nil {
 		log.Fatal("Error writing new token hash to config.json: ", err.Error())
 		return err
