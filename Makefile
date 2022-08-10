@@ -9,6 +9,18 @@ tar = mkdir -p build && tar -cvzf ./$(appname)_v$(version)_$(1)_$(2).tar.gz smar
 
 all:	linux
 
+# Update the current version in all locations
+version:
+	python3 update_version.py
+
+# Prepares everything for a version-release
+# In order to publish the release to Github, run `make gh-release
+release: cleanall build
+
+# Publishes the local release to Github releases
+gh-release:
+	gh release create v$(version) ./build/*.tar.gz -F ./CHANGELOG.md -t 'Infrared Node v$(version)'
+
 run:
 	go run .
 

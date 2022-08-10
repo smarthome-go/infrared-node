@@ -13,6 +13,8 @@ import (
 	"github.com/smarthome-go/sdk"
 )
 
+const Version = "1.3.0"
+
 func main() {
 	if err := log.InitLogger(logrus.TraceLevel); err != nil {
 		fmt.Println("Failed to initialize logger: ", err.Error())
@@ -60,16 +62,21 @@ func main() {
 		log.Error("Could not run test Homescript: ", err.Error())
 		os.Exit(1)
 	}
+	log.Trace("Test Homescript was successfully executed. Smarthome configuration is valid.")
 
 	// Do not start the scanner if the hardware is disabled
 	if !conf.Hardware.Enabled {
 		log.Warn("Hardware is disabled stopping the service...")
 		os.Exit(0)
 	}
+
+	// Initialize hardware
+	log.Debug(fmt.Sprintf("Initializing infrared scanner on port %d", conf.Hardware.Pin))
 	scanner, err := hardware.Init(conf.Hardware)
 	if err != nil {
 		log.Error("Failed to start service: could not initialize hardware: ", err.Error())
 		os.Exit(1)
 	}
-	hardware.Scan(conn, conf, scanner)
+	log.Info(fmt.Sprintf("Smarthome-hw-ir %s is listening on pin %d", Version, conf.Hardware.Pin))
+	hardware.StartScan(conn, conf, scanner)
 }

@@ -28,3 +28,4 @@ build
 bin
 application.log
 config.json
+smarthome-hw-ir-bin
