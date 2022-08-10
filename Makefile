@@ -20,6 +20,23 @@ cleanall: clean
 	rm -rf build
 	rm -rf config.json
 
+# Linting
+lint:
+	go vet -v
+	golangci-lint run
+	typos
+
+# Version update
+version:
+	python3 update_version.py
+
+# Release
+release: lint build
+
+# Github release
+gh-release:
+	gh release create v$(version) ./build/*.tar.gz -F ./CHANGELOG.md -t 'Infrared Node v$(version)'
+
 # Builds
 build: all linux clean
 
